@@ -1,0 +1,6 @@
+run ---> php artisan serve
+        npm run dev
+
+
+middleware ---> php artisan make:middleware adminMiddleware
+                php artisan make:middleware userMiddleware

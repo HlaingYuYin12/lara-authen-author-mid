@@ -16,13 +16,60 @@ Route::middleware('auth')->group(function () {  //login ၀◌င်ပြီး
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('admin/dashboard',function () {
-        return view('adminHomePage');
-    })->name('adminHomePage');
 
-    Route::get('user/dashboard',function () {
-        return view('userHomePage');
-    })->name('userHomePage');
+
+    // Route::middleware('admin')->group(function(){
+    //     Route::get('admin/dashboard',function () {
+    //             return view('adminHomePage');
+    //         })->name('adminHomePage');
+
+    //         Route::get('adminProcess',function(){
+    //             dd('admin acc is running');
+    //         })->name('adminProcess');
+    // });
+    //or
+
+    //  Route::group(['middleware'=>'admin'],function(){
+    //     Route::get('admin/dashboard',function () {
+    //             return view('adminHomePage');
+    //         })->name('adminHomePage');
+
+    //         Route::get('adminProcess',function(){
+    //             dd('admin acc is running');
+    //         })->name('adminProcess');
+    // });
+    //or
+
+    Route::group(['middleware'=>'admin' , 'prefix' => 'admin'],function(){
+        Route::get('dashboard',function () {
+                return view('adminHomePage');
+            })->name('adminHomePage');
+
+            Route::get('adminProcess',function(){
+                dd('admin acc is running');
+            })->name('adminProcess');
+    });
+
+    // Route::get('user/dashboard',function () {
+    //     return view('userHomePage');
+    // })->name('userHomePage')->middleware('user');
+
+    // Route::get('userProcess',function(){
+    //     dd('user acc is running');
+    // })->name('userProcess')->middleware('user');
+    //or
+
+     Route::group(['middleware'=>'user' , 'prefix' => 'user'],function(){
+        Route::get('dashboard',function () {
+                return view('userHomePage');
+            })->name('userHomePage');
+
+            Route::get('userProcess',function(){
+                dd('user acc is running');
+            })->name('userProcess');
+    });
+
+
 });
 
 

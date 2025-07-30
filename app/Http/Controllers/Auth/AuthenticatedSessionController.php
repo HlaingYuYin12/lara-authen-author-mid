@@ -17,6 +17,10 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         return view('auth.login');
+
+        // Auth::user()->name; //current account
+        //or
+        // auth()->user()->name;
     }
 
     /**
@@ -28,7 +32,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if($request->user()->role == 'admin'){
+            return to_route('adminHomePage');
+        }
+
+        if($request->user()->role == 'user'){
+            return to_route('userHomePage');
+        }
+
+        // return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
